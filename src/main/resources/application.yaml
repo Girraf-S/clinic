@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: n-user-service
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: false
+        generate_statistics: false
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/clinic-db
+    username: postgres
+    password: mitrandir
+
+server:
+  port: 8081
+
+service:
+  domain: http://localhost:8081
