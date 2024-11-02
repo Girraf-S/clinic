@@ -3,6 +3,7 @@ package bsuir.clinic.clinic.mapper;
 import bsuir.clinic.clinic.entity.Doctor;
 import bsuir.clinic.clinic.entity.MedicalExamination;
 import bsuir.clinic.clinic.entity.MedicalHistory;
+import bsuir.clinic.clinic.entity.cache.DoctorCache;
 import bsuir.clinic.clinic.entity.enums.Specialization;
 import bsuir.clinic.clinic.model.request.DoctorRequest;
 import bsuir.clinic.clinic.model.response.DoctorResponse;
@@ -21,9 +22,18 @@ public interface DoctorMapper {
     Doctor toDoctor(DoctorRequest doctorRequest);
 
     @Mapping(target = "specialization", source = "doctor.specialization", qualifiedByName = "specializationToString")
-//    @Mapping(target = "medicalExaminations", source = "doctor.medicalExaminations", qualifiedByName = "medicalExaminations")
-//    @Mapping(target = "medicalHistories", source = "doctor.medicalHistories", qualifiedByName = "medicalHistories")
     DoctorResponse toResponse(Doctor doctor);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "specialization", source = "doctorRequest.specialization", qualifiedByName = "stringToSpecialization")
+    DoctorCache toDoctorCache(DoctorRequest doctorRequest);
+
+
+    @Mapping(target = "specialization", source = "doctorCache.specialization", qualifiedByName = "specializationToString")
+    DoctorResponse toResponse(DoctorCache doctorCache);
+
+
+    DoctorCache toCache(Doctor doctor);
 
     @Named("stringToSpecialization")
     default Specialization toSpecialization(String specialization) {
@@ -34,12 +44,5 @@ public interface DoctorMapper {
     default String specializationToString(Specialization specialization) {
         return specialization == null ? null : specialization.name();
     }
-//    @Named("medicalExaminations")
-//    default Set<MedicalExamination> getSet(Set<MedicalExamination> medicalExaminations) {
-//        return medicalExaminations == null ? new HashSet<>() : medicalExaminations;
-//    }
-//    @Named("medicalHistories")
-//    default Set<MedicalHistory> getSet2(Set<MedicalHistory> medicalHistories) {
-//        return medicalHistories == null ? new HashSet<>() : medicalHistories;
-//    }
+
 }

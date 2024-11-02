@@ -15,25 +15,21 @@ public class DoctorController {
     private final DoctorService doctorService;
 
     @GetMapping
-    @CrossOrigin
     public Page<DoctorResponse> getAll(Pageable pageable){
         return doctorService.getAll(pageable);
     }
 
     @GetMapping("/{id}")
-    @CrossOrigin
     public DoctorResponse get(@PathVariable Long id){
         return doctorService.getById(id);
     }
 
     @PostMapping
-    @CrossOrigin
     public void create(@RequestBody DoctorRequest doctorRequest){
         doctorService.create(doctorRequest);
     }
 
     @DeleteMapping("/{id}")
-    @CrossOrigin
     public void delete(@PathVariable Long id){
         doctorService.delete(id);
     }

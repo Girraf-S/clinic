@@ -1,6 +1,7 @@
 package bsuir.clinic.clinic.mapper;
 
 import bsuir.clinic.clinic.entity.Patient;
+import bsuir.clinic.clinic.entity.cache.PatientCache;
 import bsuir.clinic.clinic.entity.enums.Condition;
 import bsuir.clinic.clinic.model.request.PatientRequest;
 import bsuir.clinic.clinic.model.response.PatientResponse;
@@ -17,6 +18,16 @@ public interface PatientMapper {
 
     @Mapping(target = "condition", source = "patient.condition", qualifiedByName = "conditionToString")
     PatientResponse toResponse(Patient patient);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "condition", source = "patientRequest.condition", qualifiedByName = "stringToCondition")
+    @Mapping(target = "card", ignore = true)
+    PatientCache toPatientCache(PatientRequest patientRequest);
+
+    @Mapping(target = "condition", source = "patient.condition", qualifiedByName = "conditionToString")
+    PatientResponse toResponse(PatientCache patient);
+
+    PatientCache toCache(Patient patient);
 
     @Named("stringToCondition")
     default Condition toCondition(String condition) {

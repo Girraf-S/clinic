@@ -1,6 +1,7 @@
 package bsuir.clinic.clinic.mapper;
 
 import bsuir.clinic.clinic.entity.MedicalExamination;
+import bsuir.clinic.clinic.entity.cache.MedicalExaminationCache;
 import bsuir.clinic.clinic.model.request.MedicalExaminationRequest;
 import bsuir.clinic.clinic.model.response.MedicalExaminationResponse;
 import org.mapstruct.Mapper;
@@ -19,8 +20,17 @@ public interface MedicalExaminationMapper {
 
     MedicalExaminationResponse toResponse(MedicalExamination medicalExamination);
 
+    @Mapping(target = "patient", ignore = true)
+    @Mapping(target = "doctor", ignore = true)
+    @Mapping(target = "treatment", ignore = true)
+    MedicalExaminationCache toMedicalExaminationCache(MedicalExaminationRequest medicalExaminationRequest);
+
+    MedicalExaminationResponse toResponse(MedicalExaminationCache medicalExamination);
+
     @Named("getCurrentDateTime")
     default LocalDateTime getCurrentDateTime(){
         return LocalDateTime.now();
     }
+
+    MedicalExaminationCache toCache(MedicalExamination object);
 }

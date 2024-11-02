@@ -14,6 +14,9 @@ spring:
     url: jdbc:postgresql://localhost:5432/clinic-db
     username: postgres
     password: mitrandir
+  redis:
+    port: 6379
+    host: localhost
 
 server:
   port: 8081
